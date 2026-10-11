@@ -2,6 +2,8 @@
 
 **Stop shipping the same weights twice.**
 
+> TLDR: original weights | quant + patch file => replaces having to store and download 2nd pack of weight
+
 Every abliteration, every decensoring, every small fine-tune — and the world downloads
 another full multi-GB copy of a model it already has. The actual change is a few percent of
 the bytes. The rest of the time those extra weights just sit on disk doing nothing: for each
@@ -258,6 +260,7 @@ docs/                            full experiment records with all measurements
 The patch itself (`model-patch.patch.xz`, 52,135,304 B, sha `0fa1298e…`) ships as a
 **release asset** — kept out of the repo (regenerable byte-exactly via
 `pipeline/reproduce.py`, verifiable via the manifest).
+→ **[Download v1.0.0](https://github.com/lirrensi/model-patch/releases/tag/v1.0.0)**
 
 ## Limits / honest notes
 
@@ -278,7 +281,9 @@ Not possible to get Unsloth and patch it (maybe a different tool, this concerns 
 Best case if you ship both lora adapter + script to apply and diff to specific quants AND your quantization confit. 
 Allows the best of both worlds - anyone who needs raw sf for vllm has everything already.
 And if you provide quant config if not default - then everyone can reproduce full chain.
-And most users download Q 3-4-6-8 quants you can make smallers diffs for.
+And most users download Q 3-4-6-8 quants you can make small diffs for.
+
+In case of llamacpp - mmproj parts typically stay the same so you dont even need to inclide in patch files.
 
 ## Please
 
