@@ -283,7 +283,7 @@ Allows the best of both worlds - anyone who needs raw sf for vllm has everything
 And if you provide quant config if not default - then everyone can reproduce full chain.
 And most users download Q 3-4-6-8 quants you can make small diffs for.
 
-In case of llamacpp - mmproj parts typically stay the same so you dont even need to inclide in patch files.
+In case of llamacpp - mmproj parts typically stay the same so you dont even need to include in patch files.
 
 ## Please
 
