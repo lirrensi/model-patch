@@ -1,0 +1,30 @@
+{
+  "base_model": {
+    "name": "Qwen3.5-2B",
+    "source": "Qwen/Qwen3.5-2B",
+    "safetensors": "model.safetensors-00001-of-00001.safetensors",
+    "sha256_safetensors": "aa33250c4fc64891ddfaba3a314fd9542ea371843c387178b425fbcc5ed680b1",
+    "size_safetensors": 4548221488
+  },
+  "adapter": {
+    "path": "adapter/qwen3.5-2b-heretic-r3",
+    "sha256": "bcd2efafa6a03529b3dbdab09a776cc67be200872ff720f65e9b190e88cc015d"
+  },
+  "quantizer": {
+    "tool": "llama.cpp",
+    "version": "0.5.0-dev",
+    "build": "11401",
+    "commit": "a7fb71fab",
+    "quant": "Q4_K_M"
+  },
+  "converter": {
+    "path": "llama.cpp/convert_hf_to_gguf.py",
+    "commit": "unknown"
+  },
+  "merge_python": {
+    "torch": "2.12.0+cu130"
+  },
+  "pipeline_python": {
+    "numpy": "2.5.3"
+  }
+}

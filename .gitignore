@@ -1,0 +1,14 @@
+# local experiment output
+work/
+work-*/
+verify-*.gguf
+
+# python
+__pycache__/
+*.pyc
+
+# big binary artifacts (the patch ships as a release asset)
+*.patch.xz
+*.patch.bin
+*.gguf
+*.tmp

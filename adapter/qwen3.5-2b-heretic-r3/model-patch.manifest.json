@@ -1,0 +1,47 @@
+{
+  "schema": "model-patch/1",
+  "base": "base-Q4_K_M.gguf",
+  "target": "variant-Q4_K_M.gguf",
+  "base_sha256": "c3276282e690d93f8f2f967fba2d7912f9986fbd21d2ad89e4eadd1b1c96dc2b",
+  "target_sha256": "88018427df3ed435a258d13d17970fc75d2dbcf307dba9d711bf0e64e063f59e",
+  "base_size": 1312164800,
+  "target_size": 1312164800,
+  "codec": "xz",
+  "compressor": "python-lzma preset=9|EXTREME (python 3.12.10)",
+  "xor_stream_bytes": 1312164800,
+  "patch": "model-patch.patch.xz",
+  "patch_sha256": "0fa1298e598d5d136763067a5955651039d559d8b3336a08aa0c48419708015b",
+  "patch_bytes": 52135304,
+  "patch_pct_of_base": 3.9732,
+  "created": "2026-10-11T02:56:47+00:00",
+  "provenance": {
+    "base_model": {
+      "name": "Qwen3.5-2B",
+      "source": "Qwen/Qwen3.5-2B",
+      "safetensors": "model.safetensors-00001-of-00001.safetensors",
+      "sha256_safetensors": "aa33250c4fc64891ddfaba3a314fd9542ea371843c387178b425fbcc5ed680b1",
+      "size_safetensors": 4548221488
+    },
+    "adapter": {
+      "path": "adapter/qwen3.5-2b-heretic-r3",
+      "sha256": "bcd2efafa6a03529b3dbdab09a776cc67be200872ff720f65e9b190e88cc015d"
+    },
+    "quantizer": {
+      "tool": "llama.cpp",
+      "version": "0.5.0-dev",
+      "build": "11401",
+      "commit": "a7fb71fab",
+      "quant": "Q4_K_M"
+    },
+    "converter": {
+      "path": "llama.cpp/convert_hf_to_gguf.py",
+      "commit": "unknown"
+    },
+    "merge_python": {
+      "torch": "2.12.0+cu130"
+    },
+    "pipeline_python": {
+      "numpy": "2.5.3"
+    }
+  }
+}
