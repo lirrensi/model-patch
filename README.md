@@ -284,5 +284,7 @@ And most users download Q 3-4-6-8 quants you can make smallers diffs for.
 
 Save the space on both your drive and on HF! They bleed money because we cant use very simple tools and waste space and bandwith pointlessly!
 
+If users can understand how to run a model in cli - they can run a single script to make a copy of weights!
+
 ## License
 MIT for all code , `Qwen3.5 2b` - apache 2.0
