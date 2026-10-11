@@ -2,23 +2,23 @@
 
 **Stop shipping the same weights twice.**
 
-> TLDR: original weights | quant + patch file => replaces having to store and download 2nd pack of weight
+> TL;DR: original weights | quant + patch file => replaces having to store and download a 2nd pack of weights
 
 Every abliteration, every decensoring, every small fine-tune — and the world downloads
 another full multi-GB copy of a model it already has. The actual change is a few percent of
 the bytes. The rest of the time those extra weights just sit on disk doing nothing: for each
 model you hold the original *and* the variant. Twice the size, forever.
 
-You use them once in a while, yet for every release have to download 2 almost identical sets of weights!
-If you use only in 2% of workflows that means it takes space both on your drive and on HF!
+You use them once in a while, yet for every release you have to download 2 almost identical sets of weights!
+If you use it only in 2% of workflows, that means it takes space both on your drive and on HF!
 
-When you could just keep 5-10% (at worst case) of the original and materialize 2nd set on demand.
+When you could just keep 5–10 % (worst case) of the original and materialize the 2nd set on demand.
 
 This repo is the proof and the toolchain to do it properly: ship **base + small patch**, and
 materialize the variant **on demand, byte-exact, sha256-verified** — then discard it when
 you're done.
 
-Worked example / test case — `Qwen3.5-2B` abliterated with a rank-3 LoRA (default heretic), quantized Q4_K_M.
+Worked example / test case — `Qwen3.5-2B` abliterated with a rank-3 LoRA (heretic defaults), quantized to Q4_K_M.
 All numbers below are **measured** (receipts in `docs/`):
 
 | what you ship | size | consumer needs |
@@ -213,7 +213,7 @@ The run writes `work/provenance.json` and embeds it into the patch manifest.
    single-byte corruptions on a machine with a history of BSODs (one in a make's XOR stream,
    one in an apply's output — caught immediately by the sha gates, different offsets, not
    reproducible on rerun; `xz -t` and cross-decoder checks were clean). Lesson: **every
-   step is sha-gated on both ends, and verify is mandatory** — silent corruption cannot
+   step is sha-gated on both ends, and the verify step is mandatory** — silent corruption cannot
    ship, because base, patch, and target hashes all have to agree. If a verify fails on a
    flaky host: rerun; the pipeline is idempotent.
 5. **Do not trust "it's the same model" without hashes.** Dir names lie (`general.name`
@@ -264,8 +264,8 @@ The patch itself (`model-patch.patch.xz`, 52,135,304 B, sha `0fa1298e…`) ships
 
 ## Limits / honest notes
 
-Major limitation: you can provide a diff to an original model easy, but to do so for quants - you have to both quant and make a patch yourself.
-Not possible to get Unsloth and patch it (maybe a different tool, this concerns with .safetensors first)
+Major limitation: it's easy to provide a diff to an original model, but for quants you have to both quantize and make a patch yourself.
+You can't take an Unsloth quant and patch it (maybe with a different tool — this concerns .safetensors first).
 
 - **Same-source rule:** a patch only applies to the exact base it was built from (sha-bound,
   fail-closed). That's a feature: no silent mismatches.
@@ -278,18 +278,18 @@ Not possible to get Unsloth and patch it (maybe a different tool, this concerns 
   whatever tool; apply the merge yourself (`tools/merge_adapter_clean.py`) — measured failure
   case above: dropped tensors, precision casts, metadata drift, every offset shifted.
 
-Best case if you ship both lora adapter + script to apply and diff to specific quants AND your quantization confit. 
-Allows the best of both worlds - anyone who needs raw sf for vllm has everything already.
-And if you provide quant config if not default - then everyone can reproduce full chain.
-And most users download Q 3-4-6-8 quants you can make small diffs for.
+Best case: ship both the LoRA adapter + the script to apply it, a diff for specific quants, AND your quantization config.
+That allows the best of both worlds — anyone who needs raw safetensors for vLLM has everything already.
+And if you provide the quant config when it's not the default, everyone can reproduce the full chain.
+And most users download Q3/Q4/Q6/Q8 quants — you can make small diffs for each.
 
-In case of llamacpp - mmproj parts typically stay the same so you dont even need to include in patch files.
+For llama.cpp, mmproj parts typically stay the same, so you don't even need to include them in the patch files.
 
 ## Please
 
-Save the space on both your drive and on HF! They bleed money because we cant use very simple tools and waste space and bandwith pointlessly!
+Save space on both your drive and on HF! They bleed money because we can't use very simple tools and waste space and bandwidth pointlessly!
 
-If users can understand how to run a model in cli - they can run a single script to make a copy of weights!
+If users can understand how to run a model in the CLI, they can run a single script to make a copy of the weights!
 
 ## License
-MIT for all code , `Qwen3.5 2b` - apache 2.0
+MIT for all code; `Qwen3.5-2B` — Apache 2.0.
